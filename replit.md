@@ -5,6 +5,7 @@ Bible Study Hub is a full-stack web application for managing and delivering Bibl
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
+School project requirement: Deploy to Vercel for academic demonstration.
 
 # System Architecture
 
@@ -65,6 +66,14 @@ Preferred communication style: Simple, everyday language.
 - **Development Tools**: Hot reload, error overlays, and development logging
 - **Path Aliases**: Clean import paths with @ prefixes for better organization
 - **Linting & Formatting**: Configured for consistent code style
+
+## Deployment Configuration
+- **Platform**: Vercel serverless deployment ready
+- **Build Command**: `vite build` for frontend static files
+- **API Functions**: Serverless functions in `/api` directory
+- **Environment Variables**: DATABASE_URL, SESSION_SECRET, NODE_ENV
+- **Admin Setup**: Special `/admin-setup` route for first admin creation
+- **Database**: Neon PostgreSQL with connection pooling
 
 # External Dependencies
 

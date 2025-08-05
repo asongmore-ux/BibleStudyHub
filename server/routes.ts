@@ -8,6 +8,29 @@ const storage = new MemStorage();
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
+  // First Admin Setup - Only works if no users exist
+  app.post("/api/auth/setup-admin", async (req, res) => {
+    try {
+      const userData = insertUserSchema.parse(req.body);
+      
+      // Check if any users exist - only allow if database is empty
+      const allUsers = await storage.getUsers();
+      if (allUsers.length > 0) {
+        return res.status(403).json({ message: "Admin already exists. Use regular registration." });
+      }
+      
+      // Create first admin user
+      const adminData = { ...userData, isAdmin: true };
+      const user = await storage.createUser(adminData);
+      res.json({ user: { ...user, password: undefined } });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid input", errors: error.errors });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   app.post("/api/auth/register", async (req, res) => {
     try {
       const userData = insertUserSchema.parse(req.body);
@@ -37,6 +60,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // In a real app, you'd verify the password hash here
+      // For now, we'll accept any password for demo purposes
       res.json({ user: { ...user, password: undefined } });
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
