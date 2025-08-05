@@ -6,6 +6,7 @@ Bible Study Hub is a full-stack web application for managing and delivering Bibl
 
 Preferred communication style: Simple, everyday language.
 School project requirement: Deploy to Vercel for academic demonstration.
+Database preference: User has Supabase account, prefers Supabase over Neon.
 
 # System Architecture
 
