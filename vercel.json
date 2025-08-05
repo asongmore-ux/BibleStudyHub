@@ -3,22 +3,22 @@
   "outputDirectory": "dist/public",
   "functions": {
     "api/auth/setup-admin.ts": {
-      "includeFiles": ["server/**", "shared/**"]
+      "includeFiles": "{server/**,shared/**}"
     },
     "api/auth/register.ts": {
-      "includeFiles": ["server/**", "shared/**"]
+      "includeFiles": "{server/**,shared/**}"
     },
     "api/auth/enhanced-register.ts": {
-      "includeFiles": ["server/**", "shared/**"]
+      "includeFiles": "{server/**,shared/**}"
     },
     "api/auth/login.ts": {
-      "includeFiles": ["server/**", "shared/**"]
+      "includeFiles": "{server/**,shared/**}"
     },
     "api/auth/enhanced-login.ts": {
-      "includeFiles": ["server/**", "shared/**"]
+      "includeFiles": "{server/**,shared/**}"
     },
     "api/mains.ts": {
-      "includeFiles": ["server/**", "shared/**"]
+      "includeFiles": "{server/**,shared/**}"
     }
   },
   "rewrites": [
