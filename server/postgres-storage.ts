@@ -15,7 +15,7 @@ import type {
 import type { IStorage } from "./storage";
 
 // Initialize database connection
-const connectionString = "postgresql://postgres:Kolawolekolawole12.@db.uikblmizhrttdzqtshcp.supabase.co:5432/postgres";
+const connectionString = process.env.DATABASE_URL || "postgresql://postgres:Kolawolekolawole12.@db.uikblmizhrttdzqtshcp.supabase.co:5432/postgres";
 const client = postgres(connectionString);
 const db = drizzle(client);
 
