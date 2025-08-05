@@ -8,7 +8,13 @@
     "api/auth/register.ts": {
       "includeFiles": ["server/**", "shared/**"]
     },
+    "api/auth/enhanced-register.ts": {
+      "includeFiles": ["server/**", "shared/**"]
+    },
     "api/auth/login.ts": {
+      "includeFiles": ["server/**", "shared/**"]
+    },
+    "api/auth/enhanced-login.ts": {
       "includeFiles": ["server/**", "shared/**"]
     },
     "api/mains.ts": {

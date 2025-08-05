@@ -32,8 +32,11 @@ export interface IStorage {
   searchLessons(query: string, userId?: string): Promise<LessonWithProgress[]>;
 
   // User progress methods
-  getUserProgress(userId: string, lessonId: string): Promise<UserProgress | undefined>;
-  updateUserProgress(progress: InsertUserProgress): Promise<UserProgress>;
+  getUserProgress(userId: string): Promise<UserProgress[]>;
+  getLessonProgress(userId: string, lessonId: string): Promise<UserProgress | undefined>;
+  createUserProgress(progress: InsertUserProgress): Promise<UserProgress>;
+  updateUserProgress(userId: string, lessonId: string, updates: Partial<UserProgress>): Promise<UserProgress | undefined>;
+  deleteUserProgress(userId: string, lessonId: string): Promise<boolean>;
   getUserBookmarks(userId: string): Promise<LessonWithProgress[]>;
   getUserCompletedLessons(userId: string): Promise<LessonWithProgress[]>;
 }
@@ -364,29 +367,40 @@ export class MemStorage implements IStorage {
   }
 
   // User progress methods
-  async getUserProgress(userId: string, lessonId: string): Promise<UserProgress | undefined> {
+  async getUserProgress(userId: string): Promise<UserProgress[]> {
+    return Array.from(this.userProgress.values()).filter(progress => progress.userId === userId);
+  }
+
+  async getLessonProgress(userId: string, lessonId: string): Promise<UserProgress | undefined> {
     const key = `${userId}-${lessonId}`;
     return this.userProgress.get(key);
   }
 
-  async updateUserProgress(insertProgress: InsertUserProgress): Promise<UserProgress> {
-    const key = `${insertProgress.userId}-${insertProgress.lessonId}`;
-    const existing = this.userProgress.get(key);
-    
+  async createUserProgress(insertProgress: InsertUserProgress): Promise<UserProgress> {
+    const id = randomUUID();
     const progress: UserProgress = {
-      id: existing?.id || randomUUID(),
       ...insertProgress,
-      completed: insertProgress.completed || false,
-      bookmarked: insertProgress.bookmarked || false,
-      studyTime: insertProgress.studyTime || null,
-      notes: insertProgress.notes || null,
-      createdAt: existing?.createdAt || new Date(),
+      id,
+      createdAt: new Date(),
       updatedAt: new Date(),
-      completedAt: insertProgress.completed ? new Date() : existing?.completedAt || null,
     };
-    
+    const key = `${insertProgress.userId}-${insertProgress.lessonId}`;
     this.userProgress.set(key, progress);
     return progress;
+  }
+
+  async updateUserProgress(userId: string, lessonId: string, updates: Partial<UserProgress>): Promise<UserProgress | undefined> {
+    const key = `${userId}-${lessonId}`;
+    const existing = this.userProgress.get(key);
+    if (!existing) return undefined;
+    const updated = { ...existing, ...updates, updatedAt: new Date() };
+    this.userProgress.set(key, updated);
+    return updated;
+  }
+
+  async deleteUserProgress(userId: string, lessonId: string): Promise<boolean> {
+    const key = `${userId}-${lessonId}`;
+    return this.userProgress.delete(key);
   }
 
   async getUserBookmarks(userId: string): Promise<LessonWithProgress[]> {
