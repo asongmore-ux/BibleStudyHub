@@ -8,6 +8,14 @@ Preferred communication style: Simple, everyday language.
 School project requirement: Deploy to Vercel for academic demonstration.
 Database preference: User has Supabase account, prefers Supabase over Neon.
 
+# Recent Migration Updates (January 2025)
+
+✓ Successfully migrated from Replit Agent to Replit environment
+✓ Fixed Vercel deployment configuration with individual serverless functions
+✓ Resolved TypeScript circular reference errors in schema
+✓ Created separate API endpoints for auth and data operations
+✓ Implemented proper CORS handling for Vercel deployment
+
 # System Architecture
 
 ## Frontend Architecture
@@ -71,10 +79,14 @@ Database preference: User has Supabase account, prefers Supabase over Neon.
 ## Deployment Configuration
 - **Platform**: Vercel serverless deployment ready
 - **Build Command**: `vite build` for frontend static files
-- **API Functions**: Serverless functions in `/api` directory
+- **API Functions**: Individual serverless functions in `/api` directory
+  - `/api/auth/setup-admin.ts` - First admin user creation
+  - `/api/auth/register.ts` - User registration
+  - `/api/auth/login.ts` - User authentication
+  - `/api/mains.ts` - Content retrieval
+- **CORS**: Proper cross-origin resource sharing configuration
 - **Environment Variables**: DATABASE_URL, SESSION_SECRET, NODE_ENV
-- **Admin Setup**: Special `/admin-setup` route for first admin creation
-- **Database**: Neon PostgreSQL with connection pooling
+- **Database**: In-memory storage for development, ready for database integration
 
 # External Dependencies
 
