@@ -21,12 +21,12 @@ export const mains = pgTable("mains", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const classes = pgTable("classes", {
+export const classes: any = pgTable("classes", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   title: text("title").notNull(),
   description: text("description"),
   mainId: varchar("main_id").notNull().references(() => mains.id, { onDelete: "cascade" }),
-  parentClassId: varchar("parent_class_id").references(() => classes.id, { onDelete: "cascade" }),
+  parentClassId: varchar("parent_class_id").references((): any => classes.id, { onDelete: "cascade" }),
   order: integer("order").notNull().default(0),
   createdBy: varchar("created_by").notNull().references(() => users.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
