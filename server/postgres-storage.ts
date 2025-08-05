@@ -15,11 +15,8 @@ import type {
 import type { IStorage } from "./storage";
 
 // Initialize database connection
-// Clean the DATABASE_URL by removing psql wrapper and quotes
-let cleanUrl = process.env.DATABASE_URL || '';
-cleanUrl = cleanUrl.replace(/^psql\s+"/, '').replace(/"$/, '');
-
-const client = postgres(cleanUrl);
+const connectionString = "postgresql://postgres:Kolawolekolawole12.@db.uikblmizhrttdzqtshcp.supabase.co:5432/postgres";
+const client = postgres(connectionString);
 const db = drizzle(client);
 
 export class PostgresStorage implements IStorage {

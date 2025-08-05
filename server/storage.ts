@@ -259,9 +259,9 @@ export class MemStorage implements IStorage {
     const classItem: Class = {
       ...insertClass,
       id,
-      order: insertClass.order || 0,
-      description: insertClass.description || null,
-      parentClassId: insertClass.parentClassId || null,
+      order: insertClass.order ?? 0,
+      description: insertClass.description ?? null,
+      parentClassId: insertClass.parentClassId ?? null,
       createdAt: new Date(),
     };
     this.classes.set(id, classItem);

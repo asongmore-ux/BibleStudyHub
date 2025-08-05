@@ -4,7 +4,6 @@ import { MemStorage } from "./storage";
 import { insertUserSchema, insertMainSchema, insertClassSchema, insertLessonSchema, insertUserProgressSchema } from "@shared/schema";
 import { z } from "zod";
 
-// Use MemStorage for now until Supabase connection is established
 const storage = new MemStorage();
 
 export async function registerRoutes(app: Express): Promise<Server> {
