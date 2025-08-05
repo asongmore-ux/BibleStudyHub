@@ -35,13 +35,7 @@ export function AdminSetup() {
 
   const setupMutation = useMutation({
     mutationFn: async (data: AdminSetupForm) => {
-      return apiRequest('/api/auth/setup-admin', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      return apiRequest('POST', '/api/auth/setup-admin', data);
     },
     onSuccess: (data) => {
       setSetupComplete(true);

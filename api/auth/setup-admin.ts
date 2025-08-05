@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { MemStorage } from '../../server/storage';
-import { insertUserSchema } from '../../shared/schema';
+import { MemStorage } from '../../server/storage.js';
+import { insertUserSchema } from '../../shared/schema.js';
 import { z } from 'zod';
 
 const storage = new MemStorage();
