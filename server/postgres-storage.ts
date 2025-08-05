@@ -1,6 +1,6 @@
-import { drizzle } from "drizzle-orm/neon-serverless";
+import { drizzle } from "drizzle-orm/postgres-js";
 import { eq, and, desc, asc, like, ilike } from "drizzle-orm";
-import { Pool } from "@neondatabase/serverless";
+import postgres from "postgres";
 import { users, mains, classes, lessons, userProgress } from "@shared/schema";
 import type { 
   User, InsertUser, 
@@ -15,8 +15,12 @@ import type {
 import type { IStorage } from "./storage";
 
 // Initialize database connection
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-const db = drizzle(pool);
+// Clean the DATABASE_URL by removing psql wrapper and quotes
+let cleanUrl = process.env.DATABASE_URL || '';
+cleanUrl = cleanUrl.replace(/^psql\s+"/, '').replace(/"$/, '');
+
+const client = postgres(cleanUrl);
+const db = drizzle(client);
 
 export class PostgresStorage implements IStorage {
   // Helper aliases for route compatibility
